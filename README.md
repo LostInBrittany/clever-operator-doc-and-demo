@@ -110,6 +110,8 @@ target/release/clever-operator
 
 The Clever Operator requires configuration to connect to Clever Cloud's API and manage resources within your Kubernetes cluster. Configuration options are available at two levels: global (applies to all namespaces) and namespace-specific.
 
+For details on how to obtain these credentials, follow the instructions on the [How to obtain the credentials for the Clever Operator](./credentials.md) document.
+
 ### 4.1 Global Configuration
 
 Global configuration settings apply across all namespaces and are defined via environment variables or configuration files.
