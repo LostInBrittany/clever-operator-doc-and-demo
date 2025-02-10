@@ -145,7 +145,7 @@ Namespace-level configurations override the global settings for specific namespa
     metadata:
       name: clever-operator
       namespace: my-namespace
-    data:
+    stringData:
       config: |-
         api:
           endpoint: "https://api.clever-cloud.com/v2"
@@ -153,9 +153,6 @@ Namespace-level configurations override the global settings for specific namespa
           secret: "<your-api-secret>"
           consumerKey: "<your-consumer-key>"
           consumerSecret: "<your-consumer-secret>"
-        proxy:
-          host: "proxy.example.com"
-          port: 8080
     ```
     
 - **Applying the Configuration:** Apply the Secret to your namespace:
@@ -172,7 +169,7 @@ The operator automatically detects and applies namespace-specific configurations
 To ensure your configuration is applied correctly, check the operator logs for any errors or warnings:
 
 ```bash
-kubectl logs -n clever-operator <operator-pod-name>
+kubectl logs -n clever-operator-system <operator-pod-name>
 ```
 
 ## 5. Usage Examples
@@ -184,13 +181,17 @@ The Clever Operator enables you to manage Clever Cloud resources directly from y
 - **Creating a PostgreSQL Instance:** Define a YAML manifest for the PostgreSQL resource:
     
     ```yaml
-    apiVersion: clever-cloud.com/v1
-    kind: PostgreSQL
-    metadata:
-      name: my-postgresql
-      namespace: default
-    spec:
-      version: "14"
+  apiVersion: api.clever-cloud.com/v1
+  kind: PostgreSql
+  metadata:
+    name: clever-fest
+    namespace: default
+  spec:
+    organisation: "<your-organisation>"
+    options:
+      version: 14
+      encryption: false
+    instance:
       plan: "dev"
       region: "par"
     ```
@@ -221,9 +222,13 @@ The Clever Operator enables you to manage Clever Cloud resources directly from y
       name: my-redis
       namespace: default
     spec:
-      version: "704"
-      plan: "dev"
-      region: "par"
+      organisation: "<your-organisation>
+      options:
+        version: 626
+        encryption: false
+      instance:
+        region: par
+        plan: s_mono
     ```
     
     Apply the manifest to your cluster:
